@@ -1,5 +1,7 @@
 import requests
 
-endpoint = "https://httpbin.org/"
-get_response = requests.get(endpoint)
+endpoint = "https://httpbin.org/status/200"
+endpoint = "https://httpbin.org/anything"
+get_response = requests.get(endpoint, json={"data": "hello world"})
 print(get_response.text)
+print(get_response.json())
