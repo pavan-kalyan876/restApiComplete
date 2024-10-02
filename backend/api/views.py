@@ -14,6 +14,7 @@ def api_home(request, *args, **kwargs):
         data = json.loads(body)
     except:
         pass
-    print(data.keys())
-    
+    print(data)
+    data["params"] = dict(request.GET)
+
     return JsonResponse(data)
