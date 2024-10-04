@@ -15,8 +15,6 @@ def api_home(request, *args, **kwargs):
     instance = Product.objects.all().order_by("?").first()
     data = {}
     if instance:
-        # data = model_to_dict(
-        #     model_data, fields=["id", "title", "content", "price", "sale_price"]
-        # )
+
         data = ProductSerializer(instance).data
     return Response(data)
