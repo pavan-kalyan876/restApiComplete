@@ -9,12 +9,17 @@ from products.serializers import ProductSerializer
 # Create your views here.
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def api_home(request, *args, **kwargs):
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid():
+        instance = serializer.save()
+        print(instance)
+        
 
-    instance = Product.objects.all().order_by("?").first()
-    data = {}
-    if instance:
+    # instance = Product.objects.all().order_by("?").first()
+    # data = {}
+    # if instance:
 
-        data = ProductSerializer(instance).data
-    return Response(data)
+    #     data = ProductSerializer(instance).data
+    return Response(serializer.data)
