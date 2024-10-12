@@ -39,10 +39,6 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 # kwargs allows a function to accept any number of keyword arguments (arguments passed as key-value pairs)
 # These arguments are passed as a dictionary
 
-
-
-
-
 @api_view(["GET", "POST"])
 def product_alt_view(request, pk=None, *args, **kwargs):
     method = request.method
