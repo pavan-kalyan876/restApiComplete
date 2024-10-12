@@ -3,7 +3,7 @@ from rest_framework import generics
 from .models import Product
 from .serializers import ProductSerializer
 
-# Create your views here.
+
 
 
 # ListCreateAPIView is a generic view that combines both listing a collection
