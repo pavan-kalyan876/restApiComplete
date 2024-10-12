@@ -34,10 +34,5 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     # lookup field
 
 
-# ListAPIView generic view used to provide a read-only API endpoint that lists a collection of model instances.
-class ProductListAPIView(generics.ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
 
-product_list_view = ProductListAPIView.as_view()
