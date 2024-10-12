@@ -6,14 +6,16 @@ from .serializers import ProductSerializer
 # Create your views here.
 
 
-class ProductCreateAPI(generics.CreateAPIView):
+# ListCreateAPIView is a generic view that combines both listing a collection
+# of model instances (GET) and creating a new instance (POST) in a single API endpoint
+class ProductCreateAPI(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
     def performCreateMethod(self, serializer):
         # serializer.save(user=self.request.user)
-       # print(serializer.validated_data)
-        title = serializer.validated_data.get("title") # validating the data 
+        # print(serializer.validated_data)
+        title = serializer.validated_data.get("title")  # validating the data
         content = serializer.validated_data.get("content") or None
         if content is None:
             content = title
@@ -22,7 +24,7 @@ class ProductCreateAPI(generics.CreateAPIView):
 
 
 # as_view it converts class based view into a function based
-product_create_view = ProductCreateAPI.as_view()
+product_list_create_view = ProductCreateAPI.as_view()
 
 
 # it retrieves only single object
@@ -32,3 +34,10 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     # lookup field
 
 
+# ListAPIView generic view used to provide a read-only API endpoint that lists a collection of model instances.
+class ProductListAPIView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+
+product_list_view = ProductListAPIView.as_view()
