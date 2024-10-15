@@ -35,12 +35,13 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
     # lookup field
 
 
+product_detail_view = ProductDetailAPIView.as_view()
 
 
 # args allows a function to accept any number of positional arguments. These arguments are passed as a tuple.
 # kwargs allows a function to accept any number of keyword arguments (arguments passed as key-value pairs)
 # These arguments are passed as a dictionary
-
+# function based views
 @api_view(["GET", "POST"])
 def product_alt_view(request, pk=None, *args, **kwargs):
     method = request.method
@@ -48,7 +49,7 @@ def product_alt_view(request, pk=None, *args, **kwargs):
     if method == "GET":
         if pk is not None:
             # Detail view
-            obj = get_object_or_404(Product, pk=pk)# If object doesn't exist raise 404
+            obj = get_object_or_404(Product, pk=pk)  # If object doesn't exist raise 404
             data = ProductSerializer(obj).data
             return Response(data)
         else:
@@ -62,7 +63,9 @@ def product_alt_view(request, pk=None, *args, **kwargs):
         serializer = ProductSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             title = serializer.validated_data.get("title")
-            content = serializer.validated_data.get("content", title) # Default content to title if not provided
+            content = serializer.validated_data.get(
+                "content", title
+            )  # Default content to title if not provided
             serializer.save(content=content)
-            return Response(serializer.data)  
+            return Response(serializer.data)
         return Response({"detail": "Invalid data"})
