@@ -38,6 +38,20 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 product_detail_view = ProductDetailAPIView.as_view()
 
 
+class ProductUpdateAPIView(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "pk"
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        if not instance.content:
+            instance.content = instance.title
+
+
+product_update_view = ProductUpdateAPIView.as_view()
+
+
 # args allows a function to accept any number of positional arguments. These arguments are passed as a tuple.
 # kwargs allows a function to accept any number of keyword arguments (arguments passed as key-value pairs)
 # These arguments are passed as a dictionary
