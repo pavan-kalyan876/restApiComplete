@@ -41,7 +41,7 @@ product_detail_view = ProductDetailAPIView.as_view()
 class ProductUpdateAPIView(generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    lookup_field = "pk"
+    lookup_field = "pk"  # lookup_field = "pk" ensures that the view will retrieve objects based on their primary key
 
     def perform_update(self, serializer):
         instance = serializer.save()
@@ -50,6 +50,20 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
 
 
 product_update_view = ProductUpdateAPIView.as_view()
+
+
+class ProductDeleteAPIView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "pk"  # Remove the space
+
+    def perform_destroy(self, instance):
+        # Perform any custom operations before deletion if needed
+        instance.delete()  # Call instance.delete() to delete the object
+
+
+# View as an API view
+product_destroy_view = ProductDeleteAPIView.as_view()
 
 
 # args allows a function to accept any number of positional arguments. These arguments are passed as a tuple.
