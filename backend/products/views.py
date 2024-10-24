@@ -61,7 +61,6 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
         # Perform any custom operations before deletion if needed
         instance.delete()  # Call instance.delete() to delete the object
 
-
 # View as an API view
 product_destroy_view = ProductDeleteAPIView.as_view()
 
