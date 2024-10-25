@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, mixins
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework.response import Response
@@ -55,14 +55,29 @@ product_update_view = ProductUpdateAPIView.as_view()
 class ProductDeleteAPIView(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    lookup_field = "pk"  # Remove the space
+    lookup_field = "pk"
 
     def perform_destroy(self, instance):
         # Perform any custom operations before deletion if needed
         instance.delete()  # Call instance.delete() to delete the object
 
+
 # View as an API view
 product_destroy_view = ProductDeleteAPIView.as_view()
+
+# mixins are a type of reusable class used to add functionality to views
+# They allow developers to compose views with small, reusable pieces of logic by combining multiple mixins into a single class
+
+
+class ProductMixins(mixins.ListModelMixin, generics.GenericAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+product_mixin_view = ProductMixins.as_view()
 
 
 # args allows a function to accept any number of positional arguments. These arguments are passed as a tuple.
