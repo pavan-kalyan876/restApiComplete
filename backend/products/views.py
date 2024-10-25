@@ -69,11 +69,20 @@ product_destroy_view = ProductDeleteAPIView.as_view()
 # They allow developers to compose views with small, reusable pieces of logic by combining multiple mixins into a single class
 
 
-class ProductMixins(mixins.ListModelMixin, generics.GenericAPIView):
+# list ListModelMixin used to retrive all data, like get method
+# RetriveModelMixin is used to retrive a single data or specfic data
+class ProductMixins(
+    mixins.ListModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView
+):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = "pk"
 
     def get(self, request, *args, **kwargs):
+        print(args, kwargs) # it print the pk the object
+        pk = kwargs.get("pk")
+        if pk is not None:
+            return self.retrieve(request, *args, **kwargs)
         return self.list(request, *args, **kwargs)
 
 
