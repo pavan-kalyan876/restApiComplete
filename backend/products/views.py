@@ -69,8 +69,8 @@ product_destroy_view = ProductDeleteAPIView.as_view()
 # They allow developers to compose views with small, reusable pieces of logic by combining multiple mixins into a single class
 
 
-# list ListModelMixin used to retrive all data, like get method
-# RetriveModelMixin is used to retrive a single data or specfic data
+# list ListModelMixin used to retrieve all data, like get method
+# retrieveModelMixin is used to retrieve a single data or specific data
 class ProductMixins(
     mixins.ListModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView
 ):
