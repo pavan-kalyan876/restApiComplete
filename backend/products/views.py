@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 class ProductCreateAPI(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticated] #Allows access only to authenticated users
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly] #Allows access only to authenticated users
 
     def performCreateMethod(self, serializer):
         # serializer.save(user=self.request.user)
